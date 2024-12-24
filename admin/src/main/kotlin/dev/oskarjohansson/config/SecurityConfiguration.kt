@@ -1,4 +1,4 @@
-package dev.oskarjohansson.configuration
+package dev.oskarjohansson.config
 
 import dev.oskarjohansson.api.service.ApiService
 import io.ktor.client.plugins.*
@@ -6,7 +6,6 @@ import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.web.config.EnableSpringDataWebSupport
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -22,7 +21,6 @@ import java.security.interfaces.RSAPublicKey
 
 @Configuration
 @EnableWebSecurity
-@EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 class SecurityConfiguration(private val apiService: ApiService) {
 
     private val LOG: org.slf4j.Logger = LoggerFactory.getLogger(SecurityConfiguration::class.java)
@@ -60,6 +58,7 @@ class SecurityConfiguration(private val apiService: ApiService) {
         return NimbusJwtDecoder.withPublicKey(rsaPublicKey).build()
     }
 
+
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
 
@@ -68,9 +67,9 @@ class SecurityConfiguration(private val apiService: ApiService) {
             .oauth2ResourceServer { it.jwt(Customizer.withDefaults()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
-                it.requestMatchers("/user/v1/register-user", "/user/v1/login","/user/v1/activate-account/*", "/health").permitAll()
-                it.requestMatchers("/v3/*","/v3/api-docs/swagger-config", "/swagger-ui/*").permitAll()
-                it.requestMatchers("user/book/**", "user/author/**", "user/review/**").hasAnyAuthority("SCOPE_ROLE_USER", "SCOPE_ROLE_ADMIN")
+                it.requestMatchers("/admin/authentication/v1/login", "/admin/authentication/v1/create-admin" ,"/admin/authentication/v1/activate-account/*", "/health").permitAll()
+                it.requestMatchers("/v3/*","/v3/api-docs/swagger-config", "/swagger-ui/*").permitAll() // TODO: Find out how to to do this security chain safe when using a browser
+                it.requestMatchers("/admin/secured/v1/**").hasAuthority("SCOPE_ROLE_ADMIN")
                 it.anyRequest().authenticated()
             }
             .build()

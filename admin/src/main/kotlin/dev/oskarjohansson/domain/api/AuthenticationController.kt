@@ -1,13 +1,13 @@
 package dev.oskarjohansson.domain.api
 
 
-import dev.oskarjohansson.api.dto.ActivationTokenRequestDto
-import dev.oskarjohansson.api.dto.LoginRequestDTO
-import dev.oskarjohansson.api.dto.NewActivationTokenRequestDTO
-import dev.oskarjohansson.api.dto.ResponseDTO
+import dev.oskarjohansson.api.dto.request.ActivationTokenRequestDto
+import dev.oskarjohansson.api.dto.request.LoginRequestDTO
+import dev.oskarjohansson.api.dto.request.NewActivationTokenRequestDTO
+import dev.oskarjohansson.api.dto.response.ResponseDTO
 import dev.oskarjohansson.domain.api.dto.request.AdminRequestDTO
 import dev.oskarjohansson.domain.api.dto.response.AdminResponseDTO
-import dev.oskarjohansson.service.UserActivationService
+import dev.oskarjohansson.domain.service.UserActivationService
 import dev.oskarjohansson.service.UserService
 import kotlinx.coroutines.runBlocking
 import org.springframework.http.HttpStatus

@@ -1,5 +1,6 @@
 package dev.oskarjohansson.service
 
+import dev.oskarjohansson.api.service.RepositoryService
 import dev.oskarjohansson.model.CustomUserDetails
 import dev.oskarjohansson.model.User
 import org.slf4j.Logger

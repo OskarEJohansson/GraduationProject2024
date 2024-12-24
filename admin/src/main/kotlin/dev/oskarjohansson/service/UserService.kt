@@ -1,9 +1,11 @@
 package dev.oskarjohansson.service
 
-import dev.oskarjohansson.api.dto.request.NewActivationTokenRequestDTO
 import dev.oskarjohansson.api.dto.request.LoginRequestDTO
-import dev.oskarjohansson.api.dto.request.UserRequestDTO
+import dev.oskarjohansson.api.dto.request.NewActivationTokenRequestDTO
 import dev.oskarjohansson.api.service.HttpClientService
+import dev.oskarjohansson.domain.api.dto.request.AdminRequestDTO
+import dev.oskarjohansson.domain.service.MailService
+import dev.oskarjohansson.domain.service.UserActivationService
 import dev.oskarjohansson.model.ActivationToken
 import dev.oskarjohansson.repository.ActivationTokenRepository
 import dev.oskarjohansson.repository.UserRepository
@@ -19,43 +21,44 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
+
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder,
     private val activationTokenRepository: ActivationTokenRepository,
+    private val passwordEncoder: PasswordEncoder,
     private val mailService: MailService,
     private val httpClientService: HttpClientService,
     private val userActivationService: UserActivationService,
-    @Value(value = "\${domain.host.address}") private val hostAddress: String,
-    @Value(value = "\${token.activation.address.library}") private val moduleAddress: String
+    @Value(value = "\${domain.host.address}") private val hostAddress:String,
+    @Value(value = "\${token.activation.address.admin}") private val moduleAddress:String
 ) {
-    private val LOG: org.slf4j.Logger = LoggerFactory.getLogger(UserService::class.java)
+    
+    private val LOG:org.slf4j.Logger = LoggerFactory.getLogger(UserService::class.java)
 
-    fun registerUser(userRequestDTO: UserRequestDTO): Unit {
-        userRepository.findUserByUsernameOrEmail(userRequestDTO.username, userRequestDTO.email)
-            ?.let { throw IllegalArgumentException("Username or Email already exist") }
+    fun registerAdmin(adminRequestDTO: AdminRequestDTO): Unit {
+        userRepository.findUserByUsernameOrEmail(adminRequestDTO.username, adminRequestDTO.email)
+            ?.let { throw IllegalStateException("Username or Email already exist") }
 
         val user = userRepository.save(
-            createUserObject(userRequestDTO, passwordEncoder))
-         ?: throw IllegalStateException("Could not save user")
+            createAdminObject(adminRequestDTO, passwordEncoder)
+        ) ?: throw IllegalStateException("Could not save user")
 
-        val activationToken: ActivationToken = activationTokenRepository.save(ActivationToken(email = user.email))
-        LOG.debug("Token saved expires: ${activationToken.expirationDate}")
+        val activationToken = activationTokenRepository.save(ActivationToken(email = user.email))
 
-        return mailService.sendMail(activationToken.token, user.email,hostAddress, moduleAddress )
+        return mailService.sendMail(activationToken.token, user.email, hostAddress, moduleAddress)
     }
 
-    suspend fun loginUser(loginRequestDTO: LoginRequestDTO): String {
+    suspend fun loginAdmin(loginRequestDTO: LoginRequestDTO): String {
+        LOG.info("Host address for Login Admin: $hostAddress")
+        LOG.info("Module address for Login Admin, $moduleAddress")
         val response = runBlocking {
             httpClientService.client.post("${hostAddress}/authentication/v1/login") {
                 contentType(ContentType.Application.Json)
                 setBody(loginRequestDTO)
             }
         }
-
         if (response.status.isSuccess()) {
-            LOG.debug("Response status for api call to login user,status: ${response.status.value}")
             return Json.parseToJsonElement(response.bodyAsText()).jsonObject["data"]?.jsonPrimitive?.content
                 ?: throw IllegalStateException("Error parsing response from api, ${response.status}, \n request: ${response.request}")
         } else {
@@ -67,5 +70,3 @@ class UserService(
         userActivationService.newActivationToken(newActivationTokenRequestDto, hostAddress, moduleAddress)
     }
 }
-
-

@@ -1,6 +1,6 @@
 package dev.oskarjohansson.domain.api
 
-import dev.oskarjohansson.api.dto.ResponseDTO
+import dev.oskarjohansson.api.dto.response.ResponseDTO
 import dev.oskarjohansson.domain.service.AdminService
 import dev.oskarjohansson.model.User
 import jakarta.servlet.http.HttpServletRequest

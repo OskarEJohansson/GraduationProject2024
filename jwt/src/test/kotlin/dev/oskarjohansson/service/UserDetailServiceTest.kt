@@ -1,5 +1,6 @@
 package dev.oskarjohansson.service
 
+import dev.oskarjohansson.api.service.RepositoryService
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test

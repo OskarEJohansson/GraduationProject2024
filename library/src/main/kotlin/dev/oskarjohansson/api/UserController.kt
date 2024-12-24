@@ -1,8 +1,12 @@
 package dev.oskarjohansson.api
 
 import dev.oskarjohansson.api.dto.*
+import dev.oskarjohansson.api.dto.request.ActivationTokenRequestDto
 import dev.oskarjohansson.api.dto.request.LoginRequestDTO
+import dev.oskarjohansson.api.dto.request.NewActivationTokenRequestDTO
 import dev.oskarjohansson.api.dto.request.UserRequestDTO
+import dev.oskarjohansson.api.dto.response.ResponseDTO
+import dev.oskarjohansson.api.dto.response.UserResponseDTO
 import dev.oskarjohansson.domain.service.UserActivationService
 
 import dev.oskarjohansson.service.UserService
@@ -19,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import kotlin.math.log
 
 @RestController
 @RequestMapping("/user")
