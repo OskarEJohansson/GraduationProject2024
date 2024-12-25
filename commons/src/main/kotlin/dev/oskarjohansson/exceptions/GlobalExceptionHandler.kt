@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoderInitializationException
 import org.springframework.validation.method.MethodValidationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {

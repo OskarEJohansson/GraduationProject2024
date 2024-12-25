@@ -1,18 +1,19 @@
 package dev.oskarjohansson.service
 
-import dev.oskarjohansson.api.dto.request.RegisterBookRequestDTO
-import dev.oskarjohansson.api.dto.request.ReviewRequestDTO
-import dev.oskarjohansson.api.dto.response.AuthorInBookResponseDTO
-import dev.oskarjohansson.api.dto.response.BookInAuthorResponseDTO
-import dev.oskarjohansson.api.dto.response.ReviewResponseDTO
+
+import dev.oskarjohansson.domain.api.dto.request.RegisterBookRequestDTO
+import dev.oskarjohansson.domain.api.dto.request.ReviewRequestDTO
+import dev.oskarjohansson.domain.api.dto.response.AuthorInBookResponseDTO
+import dev.oskarjohansson.domain.api.dto.response.BookInAuthorResponseDTO
+import dev.oskarjohansson.domain.api.dto.response.ReviewResponseDTO
 import dev.oskarjohansson.domain.enums.Genres
 import dev.oskarjohansson.domain.model.Author
 import dev.oskarjohansson.domain.model.Book
 import dev.oskarjohansson.domain.model.Review
+import dev.oskarjohansson.domain.service.*
 import io.ktor.util.reflect.*
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 import kotlin.test.*
 

@@ -1,14 +1,18 @@
 package dev.oskarjohansson.service
 
-import dev.oskarjohansson.api.dto.response.AuthorInBookResponseDTO
+
+import dev.oskarjohansson.domain.api.dto.response.AuthorInBookResponseDTO
 import dev.oskarjohansson.domain.model.Author
-import dev.oskarjohansson.respository.AuthorRepository
+import dev.oskarjohansson.domain.respository.AuthorRepository
+import dev.oskarjohansson.domain.service.AuthorService
 import io.ktor.util.reflect.*
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.assertDoesNotThrow
 import java.util.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class AuthorServiceTest {
 

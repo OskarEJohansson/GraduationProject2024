@@ -1,14 +1,19 @@
 package dev.oskarjohansson.service
 
-import dev.oskarjohansson.api.dto.request.AddAuthorRequestDTO
-import dev.oskarjohansson.api.dto.request.BookRequestDTO
-import dev.oskarjohansson.api.dto.request.RegisterBookRequestDTO
-import dev.oskarjohansson.api.dto.request.ReviewRequestDTO
-import dev.oskarjohansson.api.dto.response.AuthorInBookResponseDTO
+
+import dev.oskarjohansson.domain.api.dto.request.AddAuthorRequestDTO
+import dev.oskarjohansson.domain.api.dto.request.BookRequestDTO
+import dev.oskarjohansson.domain.api.dto.request.RegisterBookRequestDTO
+import dev.oskarjohansson.domain.api.dto.request.ReviewRequestDTO
+import dev.oskarjohansson.domain.api.dto.response.AuthorInBookResponseDTO
 import dev.oskarjohansson.domain.enums.Genres
 import dev.oskarjohansson.domain.model.Author
 import dev.oskarjohansson.domain.model.Book
 import dev.oskarjohansson.domain.model.Review
+import dev.oskarjohansson.domain.service.AuthorService
+import dev.oskarjohansson.domain.service.BookService
+import dev.oskarjohansson.domain.service.LibraryService
+import dev.oskarjohansson.domain.service.ReviewService
 import io.ktor.util.reflect.*
 import io.mockk.every
 import io.mockk.mockk

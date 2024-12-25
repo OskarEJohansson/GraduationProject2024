@@ -8,8 +8,6 @@ import dev.oskarjohansson.repository.ActivationTokenRepository
 import dev.oskarjohansson.repository.UserRepository
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
-import kotlin.IllegalStateException
 
 @Service
 class UserActivationService(
