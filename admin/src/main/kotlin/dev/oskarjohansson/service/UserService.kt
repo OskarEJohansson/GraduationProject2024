@@ -3,9 +3,10 @@ package dev.oskarjohansson.service
 import dev.oskarjohansson.api.dto.request.LoginRequestDTO
 import dev.oskarjohansson.api.dto.request.NewActivationTokenRequestDTO
 import dev.oskarjohansson.api.service.HttpClientService
+import dev.oskarjohansson.api.service.MailService
+import dev.oskarjohansson.api.service.UserActivationService
 import dev.oskarjohansson.domain.api.dto.request.AdminRequestDTO
-import dev.oskarjohansson.domain.service.MailService
-import dev.oskarjohansson.domain.service.UserActivationService
+
 import dev.oskarjohansson.model.ActivationToken
 import dev.oskarjohansson.repository.ActivationTokenRepository
 import dev.oskarjohansson.repository.UserRepository
